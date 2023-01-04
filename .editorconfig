@@ -264,3 +264,12 @@ dotnet_naming_rule.everything_else_naming.severity = suggestion
 
 # SA1633 File should have header
 dotnet_diagnostic.SA1633.severity=silent
+
+# CS1591: Fehledes XML-Kommentar für öffentlich sichtbaren Typ oder Element
+dotnet_diagnostic.CS1591.severity = silent
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = silent
+
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = silent
