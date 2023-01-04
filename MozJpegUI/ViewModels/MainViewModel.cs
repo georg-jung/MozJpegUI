@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using System.Windows.Input;
-using MozJpegUI.Contracts.Services;
-using MozJpegUI.Helpers;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MozJpegUI.Contracts.Services;
+using MozJpegUI.Helpers;
 
 namespace MozJpegUI.ViewModels;
 
@@ -17,6 +17,9 @@ public partial class MainViewModel : ObservableRecipient, IFilesDropped
     [ObservableProperty]
     private int _jpegQuality = 85;
 
+    [ObservableProperty]
+    private ObservableCollection<ConversionViewModel>? _conversions;
+
     public MainViewModel(INavigationService navigationService)
     {
         _navigationService = navigationService;
@@ -24,10 +27,14 @@ public partial class MainViewModel : ObservableRecipient, IFilesDropped
 
     public void OnFilesDropped(string[] files)
     {
-        Debug.Print("---");
+        Conversions ??= new();
         foreach (var file in files)
         {
-            Debug.Print($"{file}");
+            var c = new ConversionViewModel
+            {
+                FilePath = file,
+            };
+            Conversions.Add(c);
         }
     }
 

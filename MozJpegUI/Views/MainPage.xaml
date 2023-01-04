@@ -5,14 +5,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:MozJpegUI.Helpers"
+    xmlns:vm="using:MozJpegUI.ViewModels"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+    xmlns:sys="using:System.Windows.Input"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
+    <Page.Resources>
+        <converters:EmptyObjectToObjectConverter x:Key="EmptyObjectToVisibilityConverter" EmptyValue="Collapsed" NotEmptyValue="Visible" />
+    </Page.Resources>
 
-    <Grid x:Name="ContentArea" helpers:DropFilesBehavior.IsEnabled="True" helpers:DropFilesBehavior.FileDropTarget="{x:Bind ViewModel}">
+    <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="72" />
-            <RowDefinition Height="48" />
-            <RowDefinition Height="64" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{ThemeResource SystemControlBackgroundListLowBrush}" Padding="12">
@@ -67,12 +72,46 @@
                 <SymbolIcon Symbol="Setting" />
             </Button>
         </Grid>
-        
 
-
-        <Grid Grid.Row="1" AllowDrop="True">
-            
+        <Grid Grid.Row="1" helpers:DropFilesBehavior.IsEnabled="True" helpers:DropFilesBehavior.FileDropTarget="{x:Bind ViewModel}">
+            <TextBlock x:Uid="Main_DropHere" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"
+                       Visibility="{x:Bind ViewModel.Conversions, Mode=OneWay, Converter={StaticResource EmptyObjectToVisibilityConverter}, ConverterParameter=true}" />
+            <ListView ItemsSource="{x:Bind ViewModel.Conversions, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ConversionViewModel">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse x:Name="Ellipse"
+                                Grid.RowSpan="2"
+                                Width ="32"
+                                Height="32"
+                                Margin="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                            <TextBlock Grid.Column="1"
+                                Text="{x:Bind FilePath}"
+                                x:Phase="1"
+                                Style="{ThemeResource BaseTextBlockStyle}"
+                                Margin="12,6,0,0"/>
+                            <TextBlock  Grid.Column="1"
+                                Grid.Row="1"
+                                Text="{x:Bind FilePath}"
+                                x:Phase="2"
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Margin="12,0,0,6"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
-        
+
     </Grid>
 </Page>

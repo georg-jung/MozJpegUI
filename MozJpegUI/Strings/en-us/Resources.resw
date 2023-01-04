@@ -176,4 +176,7 @@
   <data name="Settings_ReplaceIfSmallerCaption.Text" xml:space="preserve">
     <value>Skip if size reduction below</value>
   </data>
+  <data name="Main_DropHere.Text" xml:space="preserve">
+    <value>Drop your *.jpg or other image files here</value>
+  </data>
 </root>
