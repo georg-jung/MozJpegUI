@@ -1,7 +1,6 @@
-﻿using MozJpegUI.Contracts.Services;
+﻿using Microsoft.UI.Xaml;
+using MozJpegUI.Contracts.Services;
 using MozJpegUI.Helpers;
-
-using Microsoft.UI.Xaml;
 
 namespace MozJpegUI.Services;
 
@@ -9,14 +8,14 @@ public class ThemeSelectorService : IThemeSelectorService
 {
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
-    public ElementTheme Theme { get; set; } = ElementTheme.Default;
-
     private readonly ILocalSettingsService _localSettingsService;
 
     public ThemeSelectorService(ILocalSettingsService localSettingsService)
     {
         _localSettingsService = localSettingsService;
     }
+
+    public ElementTheme Theme { get; set; } = ElementTheme.Default;
 
     public async Task InitializeAsync()
     {

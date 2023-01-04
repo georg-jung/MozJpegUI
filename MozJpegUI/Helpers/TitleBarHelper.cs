@@ -23,6 +23,7 @@ internal class TitleBarHelper
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, IntPtr lParam);
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "More readable here due to DllImport.")]
     public static void UpdateTitleBar(ElementTheme theme)
     {
         if (App.MainWindow.ExtendsContentIntoTitleBar)
@@ -33,42 +34,42 @@ internal class TitleBarHelper
                 {
                     ElementTheme.Dark => new SolidColorBrush(Colors.White),
                     ElementTheme.Light => new SolidColorBrush(Colors.Black),
-                    _ => new SolidColorBrush(Colors.Transparent)
+                    _ => new SolidColorBrush(Colors.Transparent),
                 };
 
                 Application.Current.Resources["WindowCaptionForegroundDisabled"] = theme switch
                 {
                     ElementTheme.Dark => new SolidColorBrush(Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF)),
                     ElementTheme.Light => new SolidColorBrush(Color.FromArgb(0x66, 0x00, 0x00, 0x00)),
-                    _ => new SolidColorBrush(Colors.Transparent)
+                    _ => new SolidColorBrush(Colors.Transparent),
                 };
 
                 Application.Current.Resources["WindowCaptionButtonBackgroundPointerOver"] = theme switch
                 {
                     ElementTheme.Dark => new SolidColorBrush(Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF)),
                     ElementTheme.Light => new SolidColorBrush(Color.FromArgb(0x33, 0x00, 0x00, 0x00)),
-                    _ => new SolidColorBrush(Colors.Transparent)
+                    _ => new SolidColorBrush(Colors.Transparent),
                 };
 
                 Application.Current.Resources["WindowCaptionButtonBackgroundPressed"] = theme switch
                 {
                     ElementTheme.Dark => new SolidColorBrush(Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF)),
                     ElementTheme.Light => new SolidColorBrush(Color.FromArgb(0x66, 0x00, 0x00, 0x00)),
-                    _ => new SolidColorBrush(Colors.Transparent)
+                    _ => new SolidColorBrush(Colors.Transparent),
                 };
 
                 Application.Current.Resources["WindowCaptionButtonStrokePointerOver"] = theme switch
                 {
                     ElementTheme.Dark => new SolidColorBrush(Colors.White),
                     ElementTheme.Light => new SolidColorBrush(Colors.Black),
-                    _ => new SolidColorBrush(Colors.Transparent)
+                    _ => new SolidColorBrush(Colors.Transparent),
                 };
 
                 Application.Current.Resources["WindowCaptionButtonStrokePressed"] = theme switch
                 {
                     ElementTheme.Dark => new SolidColorBrush(Colors.White),
                     ElementTheme.Light => new SolidColorBrush(Colors.Black),
-                    _ => new SolidColorBrush(Colors.Transparent)
+                    _ => new SolidColorBrush(Colors.Transparent),
                 };
             }
 

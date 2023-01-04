@@ -10,6 +10,7 @@ using Windows.ApplicationModel.DataTransfer;
 namespace MozJpegUI.Helpers;
 
 // based on https://stackoverflow.com/a/65266427/1200847
+[System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "More readable here because the interface is so small.")]
 public interface IFilesDropped
 {
     void OnFilesDropped(string[] files);
@@ -46,7 +47,7 @@ public class DropFilesBehavior
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var fe = d as FrameworkElement ?? throw new InvalidOperationException();
-        
+
         if ((bool)e.NewValue)
         {
             fe.AllowDrop = true;

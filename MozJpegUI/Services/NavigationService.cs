@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using MozJpegUI.Contracts.Services;
 using MozJpegUI.Contracts.ViewModels;
 using MozJpegUI.Helpers;
-
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 
 namespace MozJpegUI.Services;
 
@@ -16,6 +14,11 @@ public class NavigationService : INavigationService
     private readonly IPageService _pageService;
     private object? _lastParameterUsed;
     private Frame? _frame;
+
+    public NavigationService(IPageService pageService)
+    {
+        _pageService = pageService;
+    }
 
     public event NavigatedEventHandler? Navigated;
 
@@ -42,11 +45,6 @@ public class NavigationService : INavigationService
 
     [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
     public bool CanGoBack => Frame != null && Frame.CanGoBack;
-
-    public NavigationService(IPageService pageService)
-    {
-        _pageService = pageService;
-    }
 
     private void RegisterFrameEvents()
     {

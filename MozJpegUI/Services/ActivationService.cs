@@ -1,9 +1,8 @@
-﻿using MozJpegUI.Activation;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using MozJpegUI.Activation;
 using MozJpegUI.Contracts.Services;
 using MozJpegUI.Views;
-
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 
 namespace MozJpegUI.Services;
 
@@ -12,7 +11,7 @@ public class ActivationService : IActivationService
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly IThemeSelectorService _themeSelectorService;
-    private UIElement? _shell = null;
+    private readonly UIElement? _shell = null;
 
     public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IThemeSelectorService themeSelectorService)
     {

@@ -1,4 +1,7 @@
-﻿using MozJpegUI.Activation;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.UI.Xaml;
+using MozJpegUI.Activation;
 using MozJpegUI.Contracts.Services;
 using MozJpegUI.Core.Contracts.Services;
 using MozJpegUI.Core.Services;
@@ -7,10 +10,6 @@ using MozJpegUI.Models;
 using MozJpegUI.Services;
 using MozJpegUI.ViewModels;
 using MozJpegUI.Views;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.UI.Xaml;
 
 namespace MozJpegUI;
 

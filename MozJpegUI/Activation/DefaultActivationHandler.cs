@@ -1,7 +1,6 @@
-﻿using MozJpegUI.Contracts.Services;
+﻿using Microsoft.UI.Xaml;
+using MozJpegUI.Contracts.Services;
 using MozJpegUI.ViewModels;
-
-using Microsoft.UI.Xaml;
 
 namespace MozJpegUI.Activation;
 
