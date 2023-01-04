@@ -1,0 +1,79 @@
+﻿<Page
+    x:Class="MozJpegUI.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:MozJpegUI.Helpers"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+    Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+    mc:Ignorable="d">
+
+    <Grid x:Name="ContentArea" helpers:DropFilesBehavior.IsEnabled="True" helpers:DropFilesBehavior.FileDropTarget="{x:Bind ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="48" />
+            <RowDefinition Height="64" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{ThemeResource SystemControlBackgroundListLowBrush}" Padding="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                x:Uid="Main_SettingsSection"
+                Style="{StaticResource SubHeadStyle}"
+                Margin="0,0,36,0" />
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    x:Uid="Main_SettingsKeepBackupsCaption"
+                    Style="{StaticResource BodyTextStyle}" />
+                <ToggleSwitch
+                    VerticalAlignment="Center"
+                    Margin="16,2,0,0"
+                    OffContent="Replace"
+                    OnContent="Keep"
+                    IsOn="{x:Bind ViewModel.KeepBackupFiles}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    x:Uid="Main_SettingsJpegQuality"
+                    Style="{StaticResource BodyTextStyle}" />
+                <Slider
+                    VerticalAlignment="Center"
+                    Margin="16,0,0,0"
+                    Width="200" 
+                    Minimum="1"
+                    Maximum="100"
+                    Value="{x:Bind ViewModel.JpegQuality}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Margin="16,0,0,0"
+                    Text="{x:Bind ViewModel.JpegQuality}"
+                    Style="{StaticResource BodyTextStyle}" />
+            </StackPanel>
+
+            <Button Grid.Column="4" Command="{x:Bind ViewModel.ShowSettingsCommand}">
+                <SymbolIcon Symbol="Setting" />
+            </Button>
+        </Grid>
+        
+
+
+        <Grid Grid.Row="1" AllowDrop="True">
+            
+        </Grid>
+        
+    </Grid>
+</Page>

@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "MozJpegUI (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "MozJpegUI (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
