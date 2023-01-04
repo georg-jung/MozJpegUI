@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:MozJpegUI.Helpers"
-    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
 
@@ -42,7 +41,7 @@
                     Margin="16,2,0,0"
                     OffContent="Replace"
                     OnContent="Keep"
-                    IsOn="{x:Bind ViewModel.KeepBackupFiles}" />
+                    IsOn="{x:Bind ViewModel.KeepBackupFiles, Mode=TwoWay}" />
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
@@ -56,11 +55,11 @@
                     Width="200" 
                     Minimum="1"
                     Maximum="100"
-                    Value="{x:Bind ViewModel.JpegQuality}" />
+                    Value="{x:Bind ViewModel.JpegQuality, Mode=TwoWay}" />
                 <TextBlock
                     VerticalAlignment="Center"
                     Margin="16,0,0,0"
-                    Text="{x:Bind ViewModel.JpegQuality}"
+                    Text="{x:Bind ViewModel.JpegQuality, Mode=OneWay}"
                     Style="{StaticResource BodyTextStyle}" />
             </StackPanel>
 

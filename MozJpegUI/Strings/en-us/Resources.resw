@@ -146,7 +146,7 @@
     <value>About this application</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>This is an unnofficial UI for MozJPEG. It can be used to create small, optimized JPEGs.</value>
+    <value>This is an unofficial UI for MozJPEG. It can be used to create small, optimized JPEGs.</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>Privacy Statement</value>
@@ -165,7 +165,7 @@
     <value>Keep originals as .bak files</value>
   </data>
   <data name="Main_SettingsSection.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Behavior</value>
   </data>
   <data name="Settings_Compression.Text" xml:space="preserve">
     <value>Image Compression</value>
