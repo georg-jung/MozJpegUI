@@ -11,7 +11,7 @@ public interface IThemeSelectorService
 
     Task InitializeAsync();
 
-    Task SetThemeAsync(ElementTheme theme);
+    void SetTheme(ElementTheme theme);
 
-    Task SetRequestedThemeAsync();
+    void SetRequestedTheme();
 }

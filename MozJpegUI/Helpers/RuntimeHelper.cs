@@ -3,16 +3,16 @@ using System.Text;
 
 namespace MozJpegUI.Helpers;
 
-public class RuntimeHelper
+public static class RuntimeHelper
 {
-    public static bool IsMSIX
-    {
-        get
-        {
-            var length = 0;
+    private static readonly Lazy<bool> _isMsix = new(DetermineIsMsix);
 
-            return GetCurrentPackageFullName(ref length, null) != 15700L;
-        }
+    public static bool IsMSIX => _isMsix.Value;
+
+    private static bool DetermineIsMsix()
+    {
+        var length = 0;
+        return GetCurrentPackageFullName(ref length, null) != 15700L;
     }
 
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]

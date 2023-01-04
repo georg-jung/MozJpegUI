@@ -14,6 +14,7 @@ public partial class SettingsViewModel : ObservableRecipient
 {
     private readonly IThemeSelectorService _themeSelectorService;
     private readonly INavigationService _navigationService;
+    private readonly ILocalSettingsService _localSettingsService;
 
     [ObservableProperty]
     private ElementTheme _elementTheme;
@@ -22,14 +23,19 @@ public partial class SettingsViewModel : ObservableRecipient
     private string _versionDescription;
 
     [ObservableProperty]
-    private int _selectedMinSizeReduction = 15;
+    private int _selectedMinSizeReduction;
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, INavigationService navigationService)
+    public SettingsViewModel(
+        IThemeSelectorService themeSelectorService,
+        INavigationService navigationService,
+        ILocalSettingsService localSettingsService)
     {
         _themeSelectorService = themeSelectorService;
         _navigationService = navigationService;
+        _localSettingsService = localSettingsService;
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
+        _selectedMinSizeReduction = _localSettingsService.MinSizeReduction ?? 15;
     }
 
     public IReadOnlyCollection<int> SizeReductionSteps => new[] { 1, 5, 10, 15, 20, 30, 40, 50 };
@@ -55,16 +61,17 @@ public partial class SettingsViewModel : ObservableRecipient
         {
             versionStr = GetInformationalVersion() ?? "UNKNOWN VERSION";
         }
+
         return $"{"AppDisplayName".GetLocalized()} - {versionStr}";
     }
 
     [RelayCommand]
-    private async Task SwitchThemeAsync(ElementTheme param)
+    private void SwitchTheme(ElementTheme param)
     {
         if (ElementTheme != param)
         {
             ElementTheme = param;
-            await _themeSelectorService.SetThemeAsync(param);
+            _themeSelectorService.SetTheme(param);
         }
     }
 
@@ -72,5 +79,10 @@ public partial class SettingsViewModel : ObservableRecipient
     private void NavigateBack()
     {
         _navigationService.GoBack();
+    }
+
+    partial void OnSelectedMinSizeReductionChanged(int value)
+    {
+        _localSettingsService.MinSizeReduction = value;
     }
 }

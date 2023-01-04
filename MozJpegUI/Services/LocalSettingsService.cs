@@ -1,88 +1,29 @@
-﻿using MozJpegUI.Contracts.Services;
-using MozJpegUI.Core.Contracts.Services;
-using MozJpegUI.Core.Helpers;
-using MozJpegUI.Helpers;
-using MozJpegUI.Models;
-
-using Microsoft.Extensions.Options;
-
-using Windows.ApplicationModel;
+﻿using System.Text.Json;
+using MozJpegUI.Contracts.Services;
 using Windows.Storage;
 
 namespace MozJpegUI.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {
-    private const string _defaultApplicationDataFolder = "MozJpegUI/ApplicationData";
-    private const string _defaultLocalSettingsFile = "LocalSettings.json";
-
-    private readonly IFileService _fileService;
-    private readonly LocalSettingsOptions _options;
-
-    private readonly string _localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-    private readonly string _applicationDataFolder;
-    private readonly string _localsettingsFile;
-
-    private IDictionary<string, object> _settings;
-
-    private bool _isInitialized;
-
-    public LocalSettingsService(IFileService fileService, IOptions<LocalSettingsOptions> options)
+    public int? MinSizeReduction
     {
-        _fileService = fileService;
-        _options = options.Value;
-
-        _applicationDataFolder = Path.Combine(_localApplicationData, _options.ApplicationDataFolder ?? _defaultApplicationDataFolder);
-        _localsettingsFile = _options.LocalSettingsFile ?? _defaultLocalSettingsFile;
-
-        _settings = new Dictionary<string, object>();
+        get => ReadSetting<int>(SettingsKeys.MinSizeReductionPercentage);
+        set => SaveSetting(SettingsKeys.MinSizeReductionPercentage, value);
     }
 
-    private async Task InitializeAsync()
+    public T? ReadSetting<T>(string key)
     {
-        if (!_isInitialized)
+        if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
         {
-            _settings = await Task.Run(() => _fileService.Read<IDictionary<string, object>>(_applicationDataFolder, _localsettingsFile)) ?? new Dictionary<string, object>();
-
-            _isInitialized = true;
-        }
-    }
-
-    public async Task<T?> ReadSettingAsync<T>(string key)
-    {
-        if (RuntimeHelper.IsMSIX)
-        {
-            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
-            {
-                return await Json.ToObjectAsync<T>((string)obj);
-            }
-        }
-        else
-        {
-            await InitializeAsync();
-
-            if (_settings != null && _settings.TryGetValue(key, out var obj))
-            {
-                return await Json.ToObjectAsync<T>((string)obj);
-            }
+            return JsonSerializer.Deserialize<T>((string)obj);
         }
 
         return default;
     }
 
-    public async Task SaveSettingAsync<T>(string key, T value)
+    public void SaveSetting<T>(string key, T value)
     {
-        if (RuntimeHelper.IsMSIX)
-        {
-            ApplicationData.Current.LocalSettings.Values[key] = await Json.StringifyAsync(value);
-        }
-        else
-        {
-            await InitializeAsync();
-
-            _settings[key] = await Json.StringifyAsync(value);
-
-            await Task.Run(() => _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings));
-        }
+        ApplicationData.Current.LocalSettings.Values[key] = JsonSerializer.Serialize(value);
     }
 }

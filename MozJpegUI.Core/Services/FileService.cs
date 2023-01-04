@@ -1,8 +1,6 @@
 ﻿using System.Text;
-
+using System.Text.Json;
 using MozJpegUI.Core.Contracts.Services;
-
-using Newtonsoft.Json;
 
 namespace MozJpegUI.Core.Services;
 
@@ -13,8 +11,8 @@ public class FileService : IFileService
         var path = Path.Combine(folderPath, fileName);
         if (File.Exists(path))
         {
-            var json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<T>(json);
+            using var fileStream = File.OpenRead(path);
+            return JsonSerializer.Deserialize<T>(fileStream);
         }
 
         return default;
@@ -27,8 +25,9 @@ public class FileService : IFileService
             Directory.CreateDirectory(folderPath);
         }
 
-        var fileContent = JsonConvert.SerializeObject(content);
-        File.WriteAllText(Path.Combine(folderPath, fileName), fileContent, Encoding.UTF8);
+        var path = Path.Combine(folderPath, fileName);
+        using var fileStream = File.OpenWrite(path);
+        JsonSerializer.Serialize(fileStream, content);
     }
 
     public void Delete(string folderPath, string fileName)
