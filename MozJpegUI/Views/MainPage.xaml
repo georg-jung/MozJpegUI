@@ -7,7 +7,6 @@
     xmlns:helpers="using:MozJpegUI.Helpers"
     xmlns:vm="using:MozJpegUI.ViewModels"
     xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:sys="using:System.Windows.Input"
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
     <Page.Resources>
@@ -76,7 +75,7 @@
         <Grid Grid.Row="1" helpers:DropFilesBehavior.IsEnabled="True" helpers:DropFilesBehavior.FileDropTarget="{x:Bind ViewModel}">
             <TextBlock x:Uid="Main_DropHere" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"
                        Visibility="{x:Bind ViewModel.Conversions, Mode=OneWay, Converter={StaticResource EmptyObjectToVisibilityConverter}, ConverterParameter=true}" />
-            <ListView ItemsSource="{x:Bind ViewModel.Conversions, Mode=OneWay}">
+            <ListView ItemsSource="{x:Bind ViewModel.Conversions, Mode=OneWay}" SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:ConversionViewModel">
                         <Grid>
@@ -88,14 +87,26 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Ellipse x:Name="Ellipse"
+                            <ProgressRing
+                                IsActive="{x:Bind ProgressIsActive}"
+                                Grid.RowSpan="2"
+                                Width ="32"
+                                Height="32"
+                                Margin="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center" 
+                                Visibility="{x:Bind ProgressVisible, Mode=OneWay}" />
+                            <SymbolIcon
+                                Symbol="{x:Bind StatusSymbol, Mode=OneWay}"
+                                Foreground="{x:Bind StatusSymbolBrush, Mode=OneWay}"
                                 Grid.RowSpan="2"
                                 Width ="32"
                                 Height="32"
                                 Margin="6"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
-                                Fill="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                                Visibility="{x:Bind StatusSymbolVisible, Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind StatusToolTip, Mode=OneWay}"/>
                             <TextBlock Grid.Column="1"
                                 Text="{x:Bind FilePath}"
                                 x:Phase="1"
@@ -103,7 +114,7 @@
                                 Margin="12,6,0,0"/>
                             <TextBlock  Grid.Column="1"
                                 Grid.Row="1"
-                                Text="{x:Bind FilePath}"
+                                Text="{x:Bind SizeDisplay}"
                                 x:Phase="2"
                                 Style="{ThemeResource BodyTextBlockStyle}"
                                 Margin="12,0,0,6"/>

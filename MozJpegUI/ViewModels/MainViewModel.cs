@@ -30,10 +30,9 @@ public partial class MainViewModel : ObservableRecipient, IFilesDropped
         Conversions ??= new();
         foreach (var file in files)
         {
-            var c = new ConversionViewModel
-            {
-                FilePath = file,
-            };
+            var c = ConversionViewModel.Create(file);
+            c.Status = (ConversionViewModel.ConversionStatus)Random.Shared.Next(5);
+            c.NewSize = c.OldSize.HasValue ? (long)(c.OldSize.Value * Random.Shared.NextDouble()) : null;
             Conversions.Add(c);
         }
     }

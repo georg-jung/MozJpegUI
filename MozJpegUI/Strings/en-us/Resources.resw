@@ -176,7 +176,22 @@
   <data name="Settings_ReplaceIfSmallerCaption.Text" xml:space="preserve">
     <value>Skip if size reduction below</value>
   </data>
+  <data name="DroppedItemDoesNotExist" xml:space="preserve">
+    <value>File could not be found.</value>
+  </data>
+  <data name="DroppedItemIsDirectory" xml:space="preserve">
+    <value>Directories can not be converted.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>Finished</value>
+  </data>
   <data name="Main_DropHere.Text" xml:space="preserve">
     <value>Drop your *.jpg or other image files here</value>
+  </data>
+  <data name="Skipped" xml:space="preserve">
+    <value>Skipped</value>
   </data>
 </root>

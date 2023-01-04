@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Humanizer;
+using Microsoft.UI.Xaml.Controls;
 using MozJpegUI.ViewModels;
 
 namespace MozJpegUI.Views;
