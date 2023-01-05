@@ -12,7 +12,7 @@
   <Identity
     Name="2A69CC90-6E9D-428B-9AFB-55E55F8699CC"
     Publisher="CN=georg"
-    Version="1.0.0.0" />
+    Version="0.1.0.0" />
 
   <Properties>
     <DisplayName>MozJpegUI</DisplayName>
