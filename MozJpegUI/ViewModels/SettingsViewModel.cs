@@ -35,7 +35,7 @@ public partial class SettingsViewModel : ObservableRecipient
         _localSettingsService = localSettingsService;
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
-        _selectedMinSizeReduction = _localSettingsService.MinSizeReduction ?? 15;
+        _selectedMinSizeReduction = _localSettingsService.MinSizeReduction;
     }
 
     public IReadOnlyCollection<int> SizeReductionSteps => new[] { 1, 5, 10, 15, 20, 30, 40, 50 };

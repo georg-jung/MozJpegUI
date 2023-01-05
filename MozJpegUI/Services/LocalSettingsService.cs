@@ -6,9 +6,11 @@ namespace MozJpegUI.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {
-    public int? MinSizeReduction
+    public const int MinSizeReductionDefault = 15;
+
+    public int MinSizeReduction
     {
-        get => ReadSetting<int>(SettingsKeys.MinSizeReductionPercentage);
+        get => ReadSetting<int?>(SettingsKeys.MinSizeReductionPercentage) ?? MinSizeReductionDefault;
         set => SaveSetting(SettingsKeys.MinSizeReductionPercentage, value);
     }
 

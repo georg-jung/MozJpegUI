@@ -45,6 +45,9 @@ public partial class ConversionViewModel : ObservableRecipient
     private ConversionViewModel(string filePath)
     {
         FilePath = filePath;
+        FileExtension = Path.GetExtension(filePath);
+        WasJpeg = ".jpg".Equals(FileExtension, StringComparison.OrdinalIgnoreCase) ||
+                    ".jpeg".Equals(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public enum ConversionStatus
@@ -58,6 +61,10 @@ public partial class ConversionViewModel : ObservableRecipient
 
     public string FilePath { get; }
 
+    public string FileExtension { get; }
+
+    public bool WasJpeg { get; }
+
     public double? NewRate => NewSize.HasValue && OldSize.HasValue ? (double)NewSize.Value / OldSize.Value : null;
 
     public string SizeDisplay
@@ -66,7 +73,8 @@ public partial class ConversionViewModel : ObservableRecipient
         {
             if (NewSize.HasValue)
             {
-                return $"{OldSize!.Value.Bytes()} ➔ {NewSize.Value.Bytes()} (-{1.0 - NewRate!.Value:p})";
+                var percentageChange = (1.0 - NewRate!.Value) * -1;
+                return $"{OldSize!.Value.Bytes()} ➔ {NewSize.Value.Bytes()} ({(percentageChange > 0 ? "+" : string.Empty)}{percentageChange:p})";
             }
 
             if (OldSize.HasValue)

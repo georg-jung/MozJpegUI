@@ -2,7 +2,7 @@
 
 public interface ILocalSettingsService
 {
-    int? MinSizeReduction { get; set; }
+    int MinSizeReduction { get; set; }
 
     T? ReadSetting<T>(string key);
 
