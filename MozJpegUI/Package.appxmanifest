@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -7,16 +7,17 @@
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
-  IgnorableNamespaces="uap rescap genTemplate">
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap rescap genTemplate mp">
 
   <Identity
-    Name="2A69CC90-6E9D-428B-9AFB-55E55F8699CC"
-    Publisher="CN=georg"
-    Version="0.1.0.0" />
+    Name="55080GeorgJung.MozJPEGUI"
+    Publisher="CN=37400242-2C14-45FF-9436-03629C9EF047"
+    Version="0.1.2.0" />
 
   <Properties>
-    <DisplayName>MozJpegUI</DisplayName>
-    <PublisherDisplayName>georg</PublisherDisplayName>
+    <DisplayName>MozJPEG UI</DisplayName>
+    <PublisherDisplayName>Georg Jung</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -70,4 +71,6 @@
     <genTemplate:Item Name="platform" Value="WinUI" />
     <genTemplate:Item Name="appmodel" Value="Desktop" />
   </genTemplate:Metadata>
+
+  <mp:PhoneIdentity PhoneProductId="48d9c5f3-28c6-4fa4-a9ae-6d529608b282" PhonePublisherId="37400242-2C14-45FF-9436-03629C9EF047"/>
 </Package>
