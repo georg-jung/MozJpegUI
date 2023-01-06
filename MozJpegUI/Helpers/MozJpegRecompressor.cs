@@ -17,10 +17,19 @@ namespace MozJpegUI.Helpers
             byte[] compressed;
             PropertyItem[] exif;
 
+            // This is what mozjpeg/libjpeg-turbo defaults to. See
+            // https://github.com/mozilla/mozjpeg/blob/fd569212597dcc249752bd38ea58a4e2072da24f/rdswitch.c#L561-L562
+            var targetChrominance = quality switch
+            {
+                >= 90 => TJSubsamplingOption.Chrominance444,
+                >= 80 => TJSubsamplingOption.Chrominance422,
+                _ => TJSubsamplingOption.Chrominance420,
+            };
+
             using (var bmp = new Bitmap(file))
             {
                 exif = bmp.PropertyItems;
-                compressed = tjc.Compress(bmp, MozJpegSharp.TJSubsamplingOption.Chrominance420, quality, MozJpegSharp.TJFlags.None);
+                compressed = tjc.Compress(bmp, targetChrominance, quality, MozJpegSharp.TJFlags.None);
             }
 
             using var msCompressed = new MemoryStream(compressed);
