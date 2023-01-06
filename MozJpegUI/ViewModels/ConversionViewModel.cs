@@ -46,8 +46,11 @@ public partial class ConversionViewModel : ObservableRecipient
     {
         FilePath = filePath;
         FileExtension = Path.GetExtension(filePath);
+
+        // Include jpe and jfif?
+        // See https://de.wikipedia.org/wiki/JPEG_File_Interchange_Format
         WasJpeg = ".jpg".Equals(FileExtension, StringComparison.OrdinalIgnoreCase) ||
-                    ".jpeg".Equals(FileExtension, StringComparison.OrdinalIgnoreCase);
+            ".jpeg".Equals(FileExtension, StringComparison.OrdinalIgnoreCase);
     }
 
     public enum ConversionStatus
@@ -55,6 +58,7 @@ public partial class ConversionViewModel : ObservableRecipient
         NotStarted,
         Processing,
         Skipped,
+        Directory,
         Finished,
         Error,
     }
@@ -127,8 +131,7 @@ public partial class ConversionViewModel : ObservableRecipient
         var x = new ConversionViewModel(filePath);
         if (Directory.Exists(filePath))
         {
-            x.Status = ConversionStatus.Error;
-            x.Error = new FileNotFoundException("DroppedItemIsDirectory".GetLocalized(), filePath);
+            x.Status = ConversionStatus.Directory;
             return x;
         }
 

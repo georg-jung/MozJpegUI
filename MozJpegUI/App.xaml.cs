@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using MozJpegUI.Activation;
 using MozJpegUI.Contracts.Services;
-using MozJpegUI.Models;
 using MozJpegUI.Services;
 using MozJpegUI.ViewModels;
 using MozJpegUI.Views;
@@ -40,9 +39,8 @@ public partial class App : Application
             services.AddTransient<SettingsPage>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
-
-            // Configuration
-            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+            services.AddTransient<FolderDroppedDialogViewModel>();
+            services.AddTransient<FolderDroppedDialogPage>();
         }).
         Build();
 

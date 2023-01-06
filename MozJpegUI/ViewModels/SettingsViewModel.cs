@@ -25,6 +25,9 @@ public partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private int _selectedMinSizeReduction;
 
+    [ObservableProperty]
+    private bool _losslessOptimizationOnly;
+
     public SettingsViewModel(
         IThemeSelectorService themeSelectorService,
         INavigationService navigationService,
@@ -36,6 +39,7 @@ public partial class SettingsViewModel : ObservableRecipient
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
         _selectedMinSizeReduction = _localSettingsService.MinSizeReduction;
+        _losslessOptimizationOnly = _localSettingsService.LosslessOptimizeOnly;
     }
 
     public IReadOnlyCollection<int> SizeReductionSteps => new[] { 1, 5, 10, 15, 20, 30, 40, 50 };
@@ -81,8 +85,7 @@ public partial class SettingsViewModel : ObservableRecipient
         _navigationService.GoBack();
     }
 
-    partial void OnSelectedMinSizeReductionChanged(int value)
-    {
-        _localSettingsService.MinSizeReduction = value;
-    }
+    partial void OnSelectedMinSizeReductionChanged(int value) => _localSettingsService.MinSizeReduction = value;
+
+    partial void OnLosslessOptimizationOnlyChanged(bool value) => _localSettingsService.LosslessOptimizeOnly = value;
 }

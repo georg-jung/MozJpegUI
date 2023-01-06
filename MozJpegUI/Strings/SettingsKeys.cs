@@ -9,4 +9,5 @@ namespace MozJpegUI;
 internal static class SettingsKeys
 {
     public const string MinSizeReductionPercentage = nameof(MinSizeReductionPercentage);
+    public const string LosslessOptimizeOnly = nameof(LosslessOptimizeOnly);
 }

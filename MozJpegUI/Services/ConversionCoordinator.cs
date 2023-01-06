@@ -27,7 +27,15 @@ internal class ConversionCoordinator : IConversionCoordinator
             byte[] result;
             try
             {
-                result = await Task.Run(() => MozJpegRecompressor.CompressSingle(conv.FilePath, options.JpegQuality)).ConfigureAwait(true);
+                if (options.LosslessMode)
+                {
+                    result = await Task.Run(() => MozJpegRecompressor.OptimizeSingleAsync(conv.FilePath)).ConfigureAwait(true);
+                }
+                else
+                {
+                    result = await Task.Run(() => MozJpegRecompressor.RecompressSingle(conv.FilePath, options.JpegQuality)).ConfigureAwait(true);
+                }
+
                 conv.NewSize = result.Length;
 
                 if (conv.WasJpeg && conv.NewRate!.Value > options.MaxNewRate)
@@ -36,29 +44,59 @@ internal class ConversionCoordinator : IConversionCoordinator
                 }
                 else
                 {
-                    if (conv.WasJpeg)
+                    async Task WriteOutput(string path)
                     {
-                        if (options.KeepBackup)
+                        using var f = File.Open(path, FileMode.CreateNew);
+                        await f.WriteAsync(result).ConfigureAwait(false);
+                        await f.FlushAsync().ConfigureAwait(false);
+                        await f.DisposeAsync().ConfigureAwait(false);
+                    }
+
+                    var parentDir = Path.GetDirectoryName(conv.FilePath) ?? throw new InvalidOperationException($"{conv.FilePath} is no valid full qualified path.");
+                    var fileWoExt = Path.GetFileNameWithoutExtension(conv.FilePath);
+                    var ext = Path.GetExtension(conv.FilePath);
+                    var filePathWoExt = Path.Combine(parentDir, fileWoExt);
+                    var outputPath = filePathWoExt + ".jpg";
+
+                    try
+                    {
+                        await WriteOutput(outputPath).ConfigureAwait(true);
+                    }
+                    catch (IOException)
+                    {
+                        // target exists
+                        if (options.KeepOriginals)
                         {
-                            var bakFile = conv.FilePath;
+                            var origFile = Path.Combine(parentDir, "Original_" + fileWoExt + ext);
+                            var cnt = 2;
+                            while (File.Exists(origFile))
+                            {
+                                origFile = Path.Combine(parentDir, $"Original{cnt}_" + fileWoExt + ext);
+                            }
+
+                            File.Move(outputPath, origFile);
+                            await WriteOutput(outputPath).ConfigureAwait(true);
+                        }
+                        else
+                        {
+                            // we need to keep a bak though until write was successfull, otherwise full loss might happen
+                            var bakFile = outputPath + ".bak";
                             while (File.Exists(bakFile))
                             {
                                 bakFile += ".bak";
                             }
 
-                            File.Move(conv.FilePath, bakFile);
+                            File.Move(outputPath, bakFile);
+                            await WriteOutput(outputPath).ConfigureAwait(true);
+                            File.Delete(bakFile);
                         }
-
-                        await File.WriteAllBytesAsync(conv.FilePath, result).ConfigureAwait(true);
                     }
-                    else
+
+                    // this is relevant for non-jpgs
+                    // check path equality https://stackoverflow.com/a/7345023/1200847
+                    if (!options.KeepOriginals && !string.Equals(Path.GetFullPath(conv.FilePath), Path.GetFullPath(outputPath)))
                     {
-                        var extLess = conv.FilePath.Substring(0, conv.FilePath.Length - conv.FileExtension.Length);
-                        var outputPath = extLess + ".jpg";
-                        using var f = File.Open(outputPath, FileMode.CreateNew);
-                        await f.WriteAsync(result).ConfigureAwait(true);
-                        await f.FlushAsync().ConfigureAwait(true);
-                        await f.DisposeAsync().ConfigureAwait(true);
+                        File.Delete(conv.FilePath);
                     }
 
                     conv.Status = ConversionViewModel.ConversionStatus.Finished;

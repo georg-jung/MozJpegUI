@@ -11,7 +11,7 @@ namespace MozJpegUI.Helpers
 {
     internal static class MozJpegRecompressor
     {
-        public static byte[] CompressSingle(string file, int quality)
+        public static byte[] RecompressSingle(string file, int quality)
         {
             using var tjc = new MozJpegSharp.TJCompressor();
             byte[] compressed;
@@ -33,6 +33,12 @@ namespace MozJpegUI.Helpers
             using var msOutput = new MemoryStream(msCompressed.Capacity);
             img.Save(msOutput, ImageFormat.Jpeg);
             return msOutput.ToArray();
+        }
+
+        public static async Task<byte[]> OptimizeSingleAsync(string file)
+        {
+            var content = await File.ReadAllBytesAsync(file);
+            return MozJpeg.LosslessOptimize(content);
         }
     }
 }

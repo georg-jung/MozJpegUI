@@ -50,6 +50,18 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        x:Uid="Settings_LosslessOptimizeCaption"
+                        Style="{StaticResource BodyTextStyle}" />
+                    <ToggleSwitch
+                        VerticalAlignment="Center"
+                        Margin="16,2,0,0"
+                        OffContent="Greater size reduction"
+                        OnContent="Lossless optimization only"
+                        IsOn="{x:Bind ViewModel.LosslessOptimizationOnly, Mode=TwoWay}" />
+                </StackPanel>
             </StackPanel>
 
             <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />

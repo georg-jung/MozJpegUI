@@ -7,11 +7,18 @@ namespace MozJpegUI.Services;
 public class LocalSettingsService : ILocalSettingsService
 {
     public const int MinSizeReductionDefault = 15;
+    public const bool LosslessOptimizeOnlyDefault = false;
 
     public int MinSizeReduction
     {
         get => ReadSetting<int?>(SettingsKeys.MinSizeReductionPercentage) ?? MinSizeReductionDefault;
         set => SaveSetting(SettingsKeys.MinSizeReductionPercentage, value);
+    }
+
+    public bool LosslessOptimizeOnly
+    {
+        get => ReadSetting<bool?>(SettingsKeys.LosslessOptimizeOnly) ?? LosslessOptimizeOnlyDefault;
+        set => SaveSetting(SettingsKeys.LosslessOptimizeOnly, value);
     }
 
     public T? ReadSetting<T>(string key)

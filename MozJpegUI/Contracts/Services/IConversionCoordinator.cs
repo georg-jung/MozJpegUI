@@ -13,5 +13,5 @@ public interface IConversionCoordinator
 
     public Task ProcessRemaining(Options options);
 
-    public record Options(int JpegQuality, double MaxNewRate, bool KeepBackup);
+    public record Options(int JpegQuality, bool LosslessMode, double MaxNewRate, bool KeepOriginals);
 }

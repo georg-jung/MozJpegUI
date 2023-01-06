@@ -38,17 +38,17 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock
                     VerticalAlignment="Center"
-                    x:Uid="Main_SettingsKeepBackupsCaption"
+                    x:Uid="Main_SettingsKeepOriginalsCaption"
                     Style="{StaticResource BodyTextStyle}" />
                 <ToggleSwitch
                     VerticalAlignment="Center"
                     Margin="16,2,0,0"
                     OffContent="Replace"
                     OnContent="Keep"
-                    IsOn="{x:Bind ViewModel.KeepBackupFiles, Mode=TwoWay}" />
+                    IsOn="{x:Bind ViewModel.KeepOriginals, Mode=TwoWay}" />
             </StackPanel>
 
-            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.QualitySettingsVisible}">
                 <TextBlock
                     VerticalAlignment="Center"
                     x:Uid="Main_SettingsJpegQuality"
@@ -65,6 +65,14 @@
                     Margin="16,0,0,0"
                     Text="{x:Bind ViewModel.JpegQuality, Mode=OneWay}"
                     Style="{StaticResource BodyTextStyle}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.LosslessMode}">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyTextStyle}">
+                    Lossless optimizations only
+                </TextBlock>
             </StackPanel>
 
             <Button Grid.Column="4" Command="{x:Bind ViewModel.ShowSettingsCommand}">

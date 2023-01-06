@@ -161,8 +161,8 @@
   <data name="Main_SettingsJpegQuality.Text" xml:space="preserve">
     <value>JPEG Quality</value>
   </data>
-  <data name="Main_SettingsKeepBackupsCaption.Text" xml:space="preserve">
-    <value>Keep originals as .bak files</value>
+  <data name="Main_SettingsKeepOriginalsCaption.Text" xml:space="preserve">
+    <value>Keep originals</value>
   </data>
   <data name="Main_SettingsSection.Text" xml:space="preserve">
     <value>Behavior</value>
@@ -174,13 +174,10 @@
     <value>Close Settings</value>
   </data>
   <data name="Settings_ReplaceIfSmallerCaption.Text" xml:space="preserve">
-    <value>Skip if size reduction below</value>
+    <value>Skip JPEGs if size reduction below</value>
   </data>
   <data name="DroppedItemDoesNotExist" xml:space="preserve">
     <value>File could not be found.</value>
-  </data>
-  <data name="DroppedItemIsDirectory" xml:space="preserve">
-    <value>Directories can not be converted.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -193,5 +190,20 @@
   </data>
   <data name="Skipped" xml:space="preserve">
     <value>Skipped</value>
+  </data>
+  <data name="FolderDroppedDialog_Description.Text" xml:space="preserve">
+    <value>You dropped one or more folders. Do you want to process the files inside these folders too or should we skip directories?</value>
+  </data>
+  <data name="FolderDroppedDialog_IncludeSubdirectories.Text" xml:space="preserve">
+    <value>Include subdirectories</value>
+  </data>
+  <data name="FolderDroppedDialog_Process.Text" xml:space="preserve">
+    <value>Process all child files</value>
+  </data>
+  <data name="FolderDroppedDialog_Skip.Text" xml:space="preserve">
+    <value>Skip folders</value>
+  </data>
+  <data name="Settings_LosslessOptimizeCaption.Text" xml:space="preserve">
+    <value>Just apply lossless optimizations</value>
   </data>
 </root>
