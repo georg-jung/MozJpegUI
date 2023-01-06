@@ -13,7 +13,7 @@
   <Identity
     Name="55080GeorgJung.MozJPEGUI"
     Publisher="CN=37400242-2C14-45FF-9436-03629C9EF047"
-    Version="0.1.0.0" />
+    Version="0.2.0.0" />
 
   <Properties>
     <DisplayName>MozJPEG UI</DisplayName>
